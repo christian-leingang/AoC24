@@ -1,0 +1,17 @@
+{
+  "name": "aoc23",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node utils/run.js",
+    "test": "npm start -- test",
+    "debug": "node --inspect utils/run.js",
+    "test:debug": "npm run debug -- test",
+    "setup": "node utils/setup.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
