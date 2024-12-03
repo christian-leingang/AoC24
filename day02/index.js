@@ -20,36 +20,42 @@ function part1(input) {
   console.log('Part 1: ', result);
 }
 
+function isSafeReport(levels){
+  let safe = true;
+  let firstdiff = levels[1] - levels[0];
+
+  console.log(levels);
+  for (let i = 1; i < levels.length; i++) {
+    let diff = levels[i] - levels[i - 1];
+    if (Math.abs(diff) < 1 || Math.abs(diff) > 3 || (firstdiff * diff <= 0)) {
+      safe = false;
+      break;
+    }
+  }
+  return safe;
+}   
+
+
 function part2(input) {
   let result = 0;
 
   for (let report of input) {
     let levels = report.split(' ').map(Number);
-    let mistakes = 0;
-    let lastLvl = levels[0];
-    let increasing = levels[0] < levels[1];
-    console.log(levels);
-    for (let i = 1; i < levels.length; i++) {
-      let curLvl = levels[i];
-      if (((curLvl > lastLvl && increasing) || (curLvl < lastLvl && !increasing)) && Math.abs(curLvl - lastLvl) < 4) {
-        lastLvl = curLvl;
-        continue;
-      } else {
-        mistakes++;
-        console.log('Got a mistake. Now:', mistakes);
-        if (mistakes < 2) {
-          levels.splice(i, 1);
-          console.log(levels);
-          i--;
-          continue;
-        } else {
-          console.log('false');
+    let safe = isSafeReport(levels);
+
+    if(!safe){
+      for(let i = 0; i < levels.length; i++){
+        let temp = [...levels];
+        temp.splice(i, 1);
+        safe = isSafeReport(temp);
+        if(safe){
           break;
         }
       }
     }
-    if (mistakes <= 1) result++;
-  }
+
+    if (safe) result++;
+  }    
 
   console.log('Part 2: ', result);
 }
