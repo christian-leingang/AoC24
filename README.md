@@ -2,9 +2,9 @@
 
 ## Scripts
 
-`npm run setup [day]`: setup folder for current or specified day
+`npm run setup [day e.g. 02]`: setup folder for current or specified day
 
-`npm run start`: run script for current day
+`npm run start [day e.g. 02]`: run script for current day
 
 `npm run test`: run script for current day with test input
 

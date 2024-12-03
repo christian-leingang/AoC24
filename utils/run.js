@@ -8,7 +8,9 @@ export function getInput(dayPath, isTest) {
   });
 }
 const isTest = process.argv[2] === 'test';
-let day = process.argv[3] || new Date().getDate().toString().padStart(2, '0');
+const parameter = isTest ? 3 : 2;
+let day = process.argv[parameter] || new Date().getDate().toString().padStart(2, '0');
+console.log(process.argv);
 const input = getInput(`./day${day}/`, isTest);
 
 import(`../day${day}/index.js`).then((module) => {
