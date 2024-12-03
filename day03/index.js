@@ -2,19 +2,36 @@ function part1(input) {
   let result = 0;
   const regex = /mul\((\d+),(\d+)\)/g;
 
-  input.foreach(line => {
+  input.forEach(line => {
     let matches;
     while ((matches = regex.exec(line)) !== null) {
-      let [_, a, b] = matches;
+      let [, a, b] = matches;
       result += Number(a) * Number(b);
     }
-  })
+  });
 
   console.log('Part 1: ', result);
 }
 
 function part2(input) {
   let result = 0;
+  const regex = /mul\((\d+),(\d+)\)|do\(\)|don't\(\)/g;
+
+  let skip = false;
+  input.forEach(line => {
+    let matches;
+    while ((matches = regex.exec(line)) !== null) {
+      if (matches[0] === "do()") {
+        skip = false;
+      } else if (matches[0] === "don't()") {
+        skip = true;
+      } else if (!skip) {
+        let [, a, b] = matches;
+        result += Number(a) * Number(b);
+      }
+    }
+  });
+
   console.log('Part 2: ', result);
 }
 
