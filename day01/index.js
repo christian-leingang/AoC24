@@ -1,25 +1,20 @@
 function part1(input) {
-  let result = 0;
   let input_A = [];
   let input_B = [];
 
-  // Verarbeitung der Eingabe
   input.forEach((line) => {
-    let values = line.trim().split(/\s+/);
-    input_A.push(+values[0]);
-    input_B.push(+values[1]);
+    let [a, b] = line.trim().split(/\s+/).map(Number);
+    input_A.push(a);
+    input_B.push(b);
   });
 
-  // Sortieren der Arrays
-  input_A.sort((a, b) => a - b);
-  input_B.sort((a, b) => a - b);
+  input_A.sort();
+  input_B.sort();
 
-  // Berechnung der Summe der absoluten Differenzen
-  for (let i = 0; i < input_A.length; i++) {
-    result += Math.abs(input_A[i] - input_B[i]);
-  }
+  let result = input_A.reduce((sum, a, i) => sum + Math.abs(a - input_B[i]), 0);
 
   console.log('Part 1: ', result);
+
 }
 
 function part2(input) {
@@ -28,18 +23,14 @@ function part2(input) {
   let input_A = [];
   let input_B = [];
 
-  // Verarbeitung der Eingabe
   input.forEach((line) => {
-    let values = line.trim().split(/\s+/);
-    input_A.push(+values[0]);
-    input_B.push(+values[1]);
+    let [a, b] = line.trim().split(/\s+/).map(Number);
+    input_A.push(a);
+    input_B.push(b);
   });
-  console.log(input_A);
-  console.log(input_B);
 
   for (let i = 0; i < input_A.length; i++) {
     let occ = input_B.reduce((acc, cur) => (cur === input_A[i] ? ++acc : acc), 0);
-    console.log(occ);
     result += occ * input_A[i];
   }
 
