@@ -1,5 +1,5 @@
 function reverseString(input) {
-  return input.split("").reverse().join("");
+  return input.split('').reverse().join('');
 }
 
 function reverseRegex(input) {
@@ -13,19 +13,8 @@ function scanLineForRegexFrontAndBack(line, regex) {
   return frontwards + backwards;
 }
 
-// function rotateMatrix90(matrix) {
-//   return matrix.map((_, i) => matrix.map(row => row[i]).join(""));
-// }
-
 function rotateMatrix90(matrix) {
-  const n = matrix.length;
-  const rotated = Array.from({ length: n }, () => Array(n).fill(''));
-  for (let i = 0; i < n; i++) {
-    for (let j = 0; j < n; j++) {
-      rotated[j][n - 1 - i] = matrix[i][j];
-    }
-  }
-  return rotated.map(row => row.join(''));
+  return matrix.map((_, i) => matrix.map((row) => row[i]).join(''));
 }
 
 function diagonalTraversal(array, direction = -45) {
@@ -37,18 +26,21 @@ function diagonalTraversal(array, direction = -45) {
   for (let k = 0; k < rows + cols - 1; k++) {
     const diagonal = [];
 
-    // Loop through diagonal elements
-    for (
-      let i = isDownward ? Math.min(rows - 1, k) : Math.max(0, k - (cols - 1));
-      isDownward ? i >= 0 : i < rows;
-      isDownward ? i-- : i++
-    ) {
-      const j = k - i; // Calculate the other index
-      if (j >= 0 && j < cols) {
+    if (isDownward) {
+      for (let i = Math.max(0, k - cols + 1); i <= Math.min(k, rows - 1); i++) {
+        const j = k - i;
+        diagonal.push(array[i][j]);
+      }
+    } else {
+      for (let i = Math.max(0, k - cols + 1); i <= Math.min(k, rows - 1); i++) {
+        const j = cols - 1 - (k - i);
         diagonal.push(array[i][j]);
       }
     }
-    result.push(diagonal.join(''));
+
+    if (diagonal.length > 0) {
+      result.push(diagonal.join(''));
+    }
   }
 
   return result;
@@ -58,22 +50,40 @@ function part1(input) {
   let result = 0;
   const regex = /XMAS/g;
 
-  let turned_matrices = [input, rotateMatrix90(input),
-    diagonalTraversal(input, 45), diagonalTraversal(input, -45)]
+  let turned_matrices = [input, rotateMatrix90(input), diagonalTraversal(input, 45), diagonalTraversal(input, -45)];
 
-  let count = 0;
-  turned_matrices.forEach((matrix => matrix.forEach(
-    line => {
-      count++;
-      result += scanLineForRegexFrontAndBack(line, regex)
-    })));
-  console.log(count)
+  turned_matrices.forEach((matrix) =>
+    matrix.forEach((line) => {
+      result += scanLineForRegexFrontAndBack(line, regex);
+    })
+  );
 
   console.log('Part 1: ', result);
 }
 
 function part2(input) {
   let result = 0;
+
+  const matrix = input.map((line) => line.split(''));
+
+  matrix.forEach((line, lineIdx) => {
+    line.forEach((char, colIdx) => {
+      if (char == 'A' && matrix[lineIdx - 1] && matrix[lineIdx + 1]) {
+        const top = matrix[lineIdx - 1][colIdx - 1] + matrix[lineIdx - 1][colIdx + 1];
+        const bot = matrix[lineIdx + 1][colIdx - 1] + matrix[lineIdx + 1][colIdx + 1];
+
+        if (
+          (top === 'MS' && bot === 'MS') ||
+          (top === 'SM' && bot === 'SM') ||
+          (top === 'SS' && bot === 'MM') ||
+          (top === 'MM' && bot === 'SS')
+        ) {
+          result++;
+        }
+      }
+    });
+  });
+
   console.log('Part 2: ', result);
 }
 
