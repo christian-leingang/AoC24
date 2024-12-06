@@ -4,6 +4,6 @@
     "test": "deno task start test",
     "debug": "deno run --inspect --allow-read utils/run.ts",
     "test:debug": "deno task debug test",
-    "setup": "deno run --allow-write utils/setup.ts"
+    "setup": "deno run --allow-write --allow-read utils/setup.ts"
   }
 }
