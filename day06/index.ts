@@ -16,12 +16,13 @@ class Guard {
   }
 
   getAhead(direction: number): { x: number; y: number } {
-    if (direction === 0) return { x: -1, y: 0 };
-    else if (direction === 90) return { x: 0, y: 1 };
-    else if (direction === 180) return { x: 1, y: 0 };
-    else if (direction === 270) return { x: 0, y: -1 };
-
-    return { x: 0, y: 0 };
+    const directionMap: { [key: number]: { x: number; y: number } } = {
+      0: { x: -1, y: 0 },
+      90: { x: 0, y: 1 },
+      180: { x: 1, y: 0 },
+      270: { x: 0, y: -1 },
+    };
+    return directionMap[direction] || { x: 0, y: 0 };
   }
 
   walkGuard(map: string[][]) {
@@ -29,9 +30,7 @@ class Guard {
     const newY = this.pos.y + this.ahead.y;
     if (newX < 0 || newX >= map.length || newY < 0 || newY >= map[0].length) {
       this.walking = false;
-    } else if (
-      map[this.pos.x + this.ahead.x][this.pos.y + this.ahead.y] !== "#"
-    ) {
+    } else if (map[newX][newY] !== "#") {
       this.pos = { x: this.ahead.x + this.pos.x, y: this.ahead.y + this.pos.y };
       this.distinctPos[this.pos.x][this.pos.y] = true;
       this.walkingSteps++;
@@ -42,22 +41,21 @@ class Guard {
   }
 
   setGuardPosAndDir(map: string[][]) {
-    let done = false;
     for (let lineIdx = 0; lineIdx < map.length; lineIdx++) {
-      const colIdx = map[lineIdx].findIndex((el) => {
-        return directionMap[el] !== undefined;
-      });
+      const colIdx = map[lineIdx].findIndex((el) =>
+        directionMap[el] !== undefined
+      );
 
-      const dirChar = map[lineIdx][colIdx];
       if (colIdx !== -1) {
+        const dirChar = map[lineIdx][colIdx];
         this.pos = { x: lineIdx, y: colIdx };
         this.direction = directionMap[dirChar];
         this.distinctPos[this.pos.x][this.pos.y] = true;
         this.ahead = this.getAhead(this.direction);
-        done = true;
+        return;
       }
     }
-    if (!done) console.log("failed");
+    console.log("failed");
   }
 }
 
@@ -69,10 +67,7 @@ const directionMap: { [key: string]: number } = {
 };
 
 function part1(input: string[]) {
-  let result = 0;
-
   const map = input.map((line) => line.split(""));
-
   const guard = new Guard([map.length, map[0].length]);
   guard.setGuardPosAndDir(map);
 
@@ -80,10 +75,7 @@ function part1(input: string[]) {
     guard.walkGuard(map);
   }
 
-  result += guard.distinctPos.reduce(
-    (acc, cur) => acc + cur.reduce((acc1, cur1) => acc1 + (cur1 ? 1 : 0), 0),
-    0,
-  );
+  const result = guard.distinctPos.flat().filter(Boolean).length;
 
   console.log("Part 1: ", result);
 }
