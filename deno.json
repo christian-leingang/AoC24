@@ -2,7 +2,7 @@
   "tasks": {
     "start": "deno run --allow-read utils/run.ts",
     "test": "deno task start test",
-    "debug": "deno run --inspect --allow-read utils/run.ts",
+    "debug": "deno run --inspect-brk --allow-read --allow-net utils/run.ts",
     "test:debug": "deno task debug test",
     "setup": "deno run --allow-write --allow-read utils/setup.ts"
   }
