@@ -6,12 +6,22 @@
   "configurations": [
     {
       "request": "launch",
-      "name": "Launch Program",
+      "name": "Debug Start Input",
       "type": "node",
       "cwd": "${workspaceFolder}",
       "env": {},
       "runtimeExecutable": "C:\\Users\\Christian\\.deno\\bin\\deno.EXE",
       "runtimeArgs": ["run", "--inspect-brk", "--allow-all", "utils/run.ts"],
+      "attachSimplePort": 9229
+    },
+    {
+      "request": "launch",
+      "name": "Debug Test Input",
+      "type": "node",
+      "cwd": "${workspaceFolder}",
+      "env": {},
+      "runtimeExecutable": "C:\\Users\\Christian\\.deno\\bin\\deno.EXE",
+      "runtimeArgs": ["run", "--inspect-brk", "--allow-all", "utils/run.ts", "test"],
       "attachSimplePort": 9229
     }
   ]

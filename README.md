@@ -2,12 +2,12 @@
 
 ## Scripts
 
-`npm run setup [day e.g. 02]`: setup folder for current or specified day
+`deno task setup [day e.g. 02]`: setup folder for current or specified day
 
-`npm run start [day e.g. 02]`: run script for current day
+`deno task start [day e.g. 02]`: run script for current day
 
-`npm run test`: run script for current day with test input
+`deno task test`: run script for current day with test input
 
-`npm run debug`: run script for current day with debug mode
+## Debugging
 
-`npm run test:debug`: run script for current day with debug mode
+Use VS Code's built-in debugger with launch.json settings
