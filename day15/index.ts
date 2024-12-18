@@ -5,8 +5,6 @@ import {
   Position,
 } from "../utils/matrixHelper.ts";
 
-import { GridMixin } from "https://deno.land/x/structurae@4.0.0/index.ts";
-
 function move(
   matrix: string[][],
   robotPos: Position,
