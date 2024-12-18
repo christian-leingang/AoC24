@@ -44,6 +44,11 @@ export const dirSteps: { [key: string]: { y: number; x: number } } = {
   ">": { y: 0, x: 1 },
 };
 
+export type PositionType = {
+  x: number;
+  y: number;
+};
+
 export class Position {
   x: number;
   y: number;
