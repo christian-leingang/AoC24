@@ -1,3 +1,6 @@
+export const getMatrix = (input: string) =>
+  input.replace(/\r/g, "").trim().split("\n").map((line) => line.split(""));
+
 export function printMatrix(matrix: string[][]) {
   matrix.forEach((row) => console.log(row.join("")));
 }
@@ -36,6 +39,28 @@ export function findPositionInMatrixInLine(
 
   return null;
 }
+
+export function getSurroundings(pos: Position): Position[] {
+  return surroundSteps.map((step) => {
+    return new Position(step.x + pos.x, step.y + pos.y);
+  });
+}
+
+export function getIntersectionTwoArrays(
+  arr1: Position[],
+  arr2: Position[],
+): Position[] {
+  return arr1.filter((el1) =>
+    arr2.some((el2) => el1.x === el2.x && el1.y === el2.y)
+  );
+}
+
+export const surroundSteps: { y: number; x: number }[] = [
+  { y: -1, x: 0 },
+  { y: 1, x: 0 },
+  { y: 0, x: -1 },
+  { y: 0, x: 1 },
+];
 
 export const dirSteps: { [key: string]: { y: number; x: number } } = {
   "^": { y: -1, x: 0 },
