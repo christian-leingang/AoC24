@@ -57,9 +57,9 @@ export function getIntersectionTwoArrays(
 
 export const surroundSteps: { y: number; x: number }[] = [
   { y: -1, x: 0 },
+  { y: 0, x: 1 },
   { y: 1, x: 0 },
   { y: 0, x: -1 },
-  { y: 0, x: 1 },
 ];
 
 export const dirSteps: { [key: string]: { y: number; x: number } } = {
