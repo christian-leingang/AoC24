@@ -59,6 +59,17 @@ function parseInput(input: string[]) {
 }
 
 function part1(input: string[]) {
+  const matrix = parseInput(input.slice(0, 1024));
+
+  const { cost, path } = dijkstra(matrix, { x: 0, y: 0 }, {
+    x: SIZE - 1,
+    y: SIZE - 1,
+  });
+
+  console.log("Part 1: ", cost);
+}
+
+function part2(input: string[]) {
   for (let i = 1024; i < input.length; i++) {
     const matrix = parseInput(input.slice(0, i));
 
@@ -71,13 +82,7 @@ function part1(input: string[]) {
       break;
     }
   }
-
   console.log("Part 1: ", "cost");
-}
-
-function part2(input: string[]) {
-  let result = 0;
-  console.log("Part 2: ", result);
 }
 
 export default function run(input: string) {
